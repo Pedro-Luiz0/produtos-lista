@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { listarProdutos, listarPorCategoria , calcularValorEstoque, pegarId} from './bd/servicos.js'
+import { listarProdutos, listarPorCategoria , calcularValorEstoque, pegarId, pegarNome, quantidadeMenordedez} from './bd/servicos.js'
 
 
 const app = express()
@@ -35,6 +35,19 @@ app.get('/produtosId/:id', (req, res) => {
   res.json(produtosFiltro)
 })
 
+app.get('/produtosNome/:nome', (req, res) => {
+  let {nome} = req.params
+  let produtosFiltro = pegarNome(nome)
+  res.json(produtosFiltro)
+})
+
+app.get('/produtos/quantidadeMenorQue10', (req, res) => {
+
+    const produtosFiltrados = quantidadeMenordedez()
+
+    res.json(produtosFiltrados)
+
+})
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000')
